@@ -88,7 +88,7 @@
         });
 
         const data = await res.json();
-
+        console.log(res.body);
         document.getElementById("responseBox").style.display = "block";
         document.getElementById("responseText").textContent = JSON.stringify(data, null, 2);
 
