@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BFHL API Frontend</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f6fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 600px;
+      margin-top: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    button {
+      background: #3498db;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+    }
+    button:hover {
+      background: #2980b9;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>BFHL API Frontend</h1>
+
+  <div class="card">
+    <label for="inputData"><b>Enter Array (comma-separated):</b></label>
+    <input id="inputData" type="text" placeholder="Example: a,1,334,R,$" />
+
+    <button onclick="sendRequest()">Send Request</button>
+
+    <div id="responseBox" style="margin-top:20px; display:none;">
+      <h3>Response:</h3>
+      <pre id="responseText"></pre>
+    </div>
+  </div>
+
+  <script>
+    async function sendRequest() {
+      const input = document.getElementById("inputData").value.trim();
+      if (!input) {
+        alert("Please enter some data!");
+        return;
+      }
+
+      const arr = input.split(",").map(item => item.trim());
+
+      try {
+        const res = await fetch("rest-api-seven-theta.vercel.app/bfhl", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ data: arr })
+        });
+
+        const data = await res.json();
+
+        document.getElementById("responseBox").style.display = "block";
+        document.getElementById("responseText").textContent = JSON.stringify(data, null, 2);
+
+      } catch (err) {
+        document.getElementById("responseBox").style.display = "block";
+        document.getElementById("responseText").textContent = "Error: " + err.message;
+      }
+    }
+  </script>
+
+</body>
+</html>
