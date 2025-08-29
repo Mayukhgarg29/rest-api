@@ -81,7 +81,7 @@
       const arr = input.split(",").map(item => item.trim());
 
       try {
-        const res = await fetch("https://bajaj-production-4b64.up.railway.app/bfhl", {
+        const res = await fetch("https://bajaj-production-4b64.up.railway.app//bfhl", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ data: arr })
